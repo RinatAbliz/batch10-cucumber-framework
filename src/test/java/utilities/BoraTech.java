@@ -1,12 +1,14 @@
 package utilities;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.locators.RelativeLocator;
 
 import pojo.Education;
 import pojo.Experiecne;
@@ -89,6 +91,7 @@ public class BoraTech {
 			}
 			if (found == false) {
 				throw new Exception("The newly input can not be found");
+
 			}
 		}
 
@@ -114,8 +117,82 @@ public class BoraTech {
 		driver.findElement(By.xpath("//input[@type='submit']")).click();
 		Keywords.wait(2);
 
-		System.out.println("Test Passed");
+	}
 
+	public static void addEducationvalidation(WebDriver driver, Education education, boolean isHappryPath)
+			throws Exception {
+		if (isHappryPath == true) {
+			addEducationHappyPath(driver, education);
+
+		} else {
+			addEducationsadPath(driver, education);
+
+		}
+
+	}
+
+	private static void addEducationsadPath(WebDriver driver, Education education) throws Exception {
+
+		List<WebElement> errorMassagies = driver.findElements(By.xpath("//div[@class='alert alert-danger']"));
+		List<String> actualErrors = new ArrayList<>();
+		for (WebElement errorMassage : errorMassagies) {
+			actualErrors.add(errorMassage.getText());
+
+		}
+		if (actualErrors.size() != education.expactedError.size()) {
+			throw new Exception("Number of Error don't match\n" + "Expacted: " + education.expactedError + "\n"
+					+ "Actural :" + actualErrors);
+		}
+		for (String expactedError : education.expactedError) {
+			if (!actualErrors.contains(expactedError)) {
+				throw new Exception("Expected Error not found - [" + expactedError + "]");
+			}
+
+		}
+
+	}
+
+	public static void addEducationHappyPath(WebDriver driver, Education education) throws Exception {
+		By educationTableLocator = RelativeLocator.with(By.tagName("table"))
+				.below(By.xpath("//h2[text()='Education Credentials']"));
+		WebElement educationTable = driver.findElement(educationTableLocator);
+		List<WebElement> rows = educationTable.findElement(By.tagName("tbody")).findElements(By.tagName("tr"));
+
+		boolean found = false;
+		for (WebElement row : rows) {
+			List<WebElement> cells = row.findElements(By.tagName("td"));
+			String school = cells.get(0).getText();
+			String degree = cells.get(1).getText();
+			if (education.school.equals(school) && education.degree.equals(degree)) {
+				found = true;
+				break;
+			}
+
+		}
+		if (found == false) {
+			throw new Exception("The newly enter education is not found");
+		}
+
+	}
+
+	public static void deletedAllExsetingEducation(WebDriver driver, Education education) throws InterruptedException {
+		int count = 0;
+		while (true) {
+			try {
+				driver.findElement(By.xpath(
+						"//h2[text()='Education Credentials']/following-sibling::table[1]//button[@class='btn btn-danger']"))
+						.click();
+				Keywords.wait(1);
+				count++;
+			} catch (NoSuchElementException e) {
+				break;
+			}
+		}
+		if (count == 0) {
+			System.out.println("No experience found that can be deleted.");
+		} else {
+			System.out.println("Successfully deleted " + count + " experience(s).");
+		}
 	}
 
 }
