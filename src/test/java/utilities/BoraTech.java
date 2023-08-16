@@ -100,8 +100,10 @@ public class BoraTech {
 	}
 
 	public static void addEducation(WebDriver driver, Education education) throws Exception {
+	
 
 		driver.findElement(By.xpath("//a[@href='/add-education']")).click();
+	
 
 		driver.findElement(By.xpath("//input[@name='school']")).sendKeys(education.school);
 		driver.findElement(By.xpath("//input[@name='degree']")).sendKeys(education.degree);
