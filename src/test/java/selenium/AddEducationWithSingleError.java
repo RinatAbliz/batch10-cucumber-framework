@@ -1,5 +1,7 @@
 package selenium;
 
+import java.time.Duration;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -9,6 +11,7 @@ import utilities.BoraTech;
 public class AddEducationWithSingleError {
 	public static void main(String[] args) {
 		WebDriver driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
 		String userName = "mochen703@gmail.com";
 		String password = "As5889590";
 	
