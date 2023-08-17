@@ -11,9 +11,9 @@ public class Keywords {
 		Thread.sleep(second * 1000);
 	}
 
-	public static String gitTimeStamp() {
-		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		return timestamp.getTime() + "";
+	public static String getTimeStamp() {
+		Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
+		return timeStamp.getTime() + "";
 	}
 
 	public static void waitWithoutTry(int second) {
