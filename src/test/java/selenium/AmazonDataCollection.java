@@ -14,6 +14,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import pojo.AmazonSearchResult;
+import utilities.Excel;
 import utilities.Keywords;
 
 public class AmazonDataCollection {
@@ -50,8 +51,7 @@ public class AmazonDataCollection {
 						continue;
 					}
 
-					// System.out.println("ID : " + ++conter + " Price : " + price + " Title : " +
-					// title);
+				
 					AmazonSearchResult result = new AmazonSearchResult(++conter, Double.valueOf(price), title);
 					results.add(result);
 					if (conter == 200) {
@@ -76,9 +76,8 @@ public class AmazonDataCollection {
 			driver.close();
 			driver.quit();
 		}
-		for (AmazonSearchResult result : results) {
-			System.out.println("ID :" + result.id + " price : " + result.price + " title : " + result.title);
-		}
+		Excel.exportAmazonSearchResult(searchItem, results);
+		
 	}
 
 }
