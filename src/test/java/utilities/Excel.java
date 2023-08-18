@@ -48,17 +48,19 @@ public class Excel {
 
 		XSSFRow minRow = sheet.createRow(results.size() + 2);
 		minRow.createCell(0).setCellValue("Min");
-		minRow.createCell(1).setCellValue(minid);
-		minRow.createCell(2).setCellValue(min);
+		minRow.createCell(1).setCellValue(min);
+		minRow.createCell(2).setCellValue("prodect ID");
+		minRow.createCell(3).setCellValue(minid);
 
 		XSSFRow maxRow = sheet.createRow(results.size() + 3);
 		maxRow.createCell(0).setCellValue("Max");
-		maxRow.createCell(1).setCellValue(maxid);
-		maxRow.createCell(2).setCellValue(max);
+		maxRow.createCell(1).setCellValue(max);
+		maxRow.createCell(2).setCellValue("prodect ID");
+		maxRow.createCell(3).setCellValue(maxid);
 
 		XSSFRow avgRow = sheet.createRow(results.size() + 4);
 		avgRow.createCell(0).setCellValue("Avg");
-		avgRow.createCell(2).setCellValue(avg);
+		avgRow.createCell(1).setCellValue(avg);
 
 		FileOutputStream fos;
 		String timeStamp = Keywords.getTimeStamp();
