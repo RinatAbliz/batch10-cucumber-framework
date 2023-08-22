@@ -21,4 +21,8 @@ public class Education {
 
 	}
 
+	public boolean equals(Education education) {
+		return this.school.equals(education.school) && this.degree.equals(education.degree);
+	}
+
 }
