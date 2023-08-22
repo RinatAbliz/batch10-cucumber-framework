@@ -18,8 +18,8 @@ public class BoraTechEddEducationApi {
 		RequestSpecification request = RestAssured.given();
 		request.header("Content-Type", "application/json");
 		request.header("x-auth-token", token);
-		Education body = new Education("MSN001"+Keywords.getTimeStamp(), "QA certified", "Automation", "2013-08-16", "2018-09-01", false,
-				"Study hard everday");
+		Education body = new Education("MSN001" + Keywords.getTimeStamp(), "QA certified", "Automation", "2013-08-16",
+				"2018-09-01", false, "Study hard everday");
 		request.body(body);
 		Response response = request.put("api/profile/education");
 
@@ -27,15 +27,14 @@ public class BoraTechEddEducationApi {
 		List<Education> educations = jp.getList("education", Education.class);
 		boolean found = false;
 		for (Education education : educations) {
-			if(education.school.equals(body.school)&&education.degree.equals(body.degree)) {
-				found=true;
+			if (body.equals(education)) {
+				found = true;
 				break;
 			}
 		}
-	
-		if(found==true) {
+		if (found == true) {
 			System.out.println("Passed");
-		}else {
+		} else {
 			System.out.println("Feild");
 		}
 
