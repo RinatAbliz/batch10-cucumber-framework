@@ -1,8 +1,12 @@
 package utilities;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import apiPojos.BoraPost;
 import apiPojos.User;
+import io.cucumber.cienvironment.internal.com.eclipsesource.json.Json;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -98,6 +102,36 @@ public class BoraTechApi {
 		JsonPath jp = response.jsonPath();
 		User user = jp.getObject("", User.class);
 		return user;
+
+	}
+
+	public static void postANewpost(String token, String newPostText) {
+		RestAssured.baseURI = "https://boratech-practice-app.onrender.com";
+		RequestSpecification request = RestAssured.given();
+		request.header("x-auth-token", token);
+		request.header("Content-Type", "application/json");
+		String timeshit = Keywords.getTimeStamp();
+		BoraPost body = new BoraPost(newPostText + timeshit);
+		request.body(body);
+
+		request.post("api/posts");
+
+		Response response = request.get("api/posts");
+		JsonPath jp = response.jsonPath();
+		List<BoraPost> posts = jp.getList("", BoraPost.class);
+		boolean found = false;
+		for (BoraPost post : posts) {
+			if (post.text.equals(body.text)) {
+				found = true;
+				break;
+			}
+		}
+		if (found) {
+			System.out.println("Passed");
+		} else {
+			System.out.println("Field");
+
+		}
 
 	}
 
