@@ -2,11 +2,9 @@ package utilities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import apiPojos.BoraPost;
 import apiPojos.User;
-import io.cucumber.cienvironment.internal.com.eclipsesource.json.Json;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -110,18 +108,22 @@ public class BoraTechApi {
 		RequestSpecification request = RestAssured.given();
 		request.header("x-auth-token", token);
 		request.header("Content-Type", "application/json");
-		String timeshit = Keywords.getTimeStamp();
-		BoraPost body = new BoraPost(newPostText + timeshit);
+		
+		BoraPost body = new BoraPost(newPostText);
 		request.body(body);
 
-		request.post("api/posts");
+		Response response = request.post("api/posts");
 
-		Response response = request.get("api/posts");
-		JsonPath jp = response.jsonPath();
-		List<BoraPost> posts = jp.getList("", BoraPost.class);
+		String user = response.jsonPath().get("name");
+
+		RequestSpecification request2 = RestAssured.given();
+		request2.header("x-auth-token", token);
+		Response response2 = request2.get("api/posts");
+		JsonPath jp = response2.jsonPath();
+		ArrayList<HashMap<String, Object>> posts = jp.get();
 		boolean found = false;
-		for (BoraPost post : posts) {
-			if (post.text.equals(body.text)) {
+		for (HashMap<String, Object> post : posts) {
+			if (post.get("text").equals(newPostText) && post.get("name").equals(user)) {
 				found = true;
 				break;
 			}
