@@ -9,11 +9,20 @@ public class AmazonAutomation {
 		WebDriver driver = new ChromeDriver();
 		try {
 			loadLocation(driver);
+			String actualTag = driver
+					.findElement(By.xpath("//div[@class=\"a-section a-spacing-small a-spacing-top-small\"]")).getText();
+			System.out.println(actualTag);
+			if(!actualTag.contains("iphone")) {
+				throw new Exception("navagated to worong page");
+			}
 
 			System.out.println("Test Passed");
 		} catch (Exception e) {
 			System.out.println("Test Filed");
 			System.out.println("Reason : " + e);
+		}finally {
+			driver.close();
+			driver.quit();
 		}
 	}
 
@@ -21,7 +30,7 @@ public class AmazonAutomation {
 		driver.get(
 				"https://www.amazon.com/?tag=hymsabk-20&ref=pd_sl_7j18redljw_e&adgrpid=1338106215055591&hvadid=83631877568167&hvnetw=o&hvqmt=e&hvbmt=be&hvdev=c&hvlocint=&hvlocphy=90209&hvtargid=kwd-83631981824880:loc-190&hydadcr=28883_14559616");
 		wait(2);
-		driver.findElement(By.id("twotabsearchtextbox")).sendKeys("iphone");
+		driver.findElement(By.id("twotabsearchtextbox")).sendKeys("shampoo");
 		driver.findElement(By.id("nav-search-submit-button")).click();
 
 	}
