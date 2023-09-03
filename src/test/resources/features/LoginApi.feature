@@ -1,6 +1,6 @@
 Feature: LoginApi
 
-  @api
+
   Scenario Outline: 
     Given call login api with "<email>" and "<password>"
     Then we should get response code <code>
