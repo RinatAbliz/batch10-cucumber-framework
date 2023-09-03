@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import apiPojos.BoraPost;
+import apiPojos.PostBody;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -40,9 +40,9 @@ public class FullBoraTechApiTest {
 			request.header("x-auth-token", token);
 			Response response = request.get("api/posts");
 			JsonPath jp = response.jsonPath();
-			List<BoraPost> posts = jp.getList("", BoraPost.class);
+			List<PostBody> posts = jp.getList("", PostBody.class);
 			boolean found = false;
-			for (BoraPost Post : posts) {
+			for (PostBody Post : posts) {
 				if (Post.text.equals(newPost)) {
 					found = true;
 					break;

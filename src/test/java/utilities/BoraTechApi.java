@@ -1,9 +1,11 @@
 package utilities;
 
-import java.util.ArrayList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.HashMap;
 
-import apiPojos.BoraPost;
+import apiPojos.Post;
+import apiPojos.PostBody;
 import apiPojos.User;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
@@ -103,38 +105,26 @@ public class BoraTechApi {
 
 	}
 
-	public static void postANewpost(String token, String newPostText) {
+	public static Post createPost(String token, String text) {
+		String endpoint = "/api/posts";
+
 		RestAssured.baseURI = "https://boratech-practice-app.onrender.com";
 		RequestSpecification request = RestAssured.given();
+
 		request.header("x-auth-token", token);
 		request.header("Content-Type", "application/json");
-		
-		BoraPost body = new BoraPost(newPostText);
-		request.body(body);
 
-		Response response = request.post("api/posts");
+		PostBody postBody = new PostBody(text);
 
-		String user = response.jsonPath().get("name");
+		request.body(postBody);
 
-		RequestSpecification request2 = RestAssured.given();
-		request2.header("x-auth-token", token);
-		Response response2 = request2.get("api/posts");
-		JsonPath jp = response2.jsonPath();
-		ArrayList<HashMap<String, Object>> posts = jp.get();
-		boolean found = false;
-		for (HashMap<String, Object> post : posts) {
-			if (post.get("text").equals(newPostText) && post.get("name").equals(user)) {
-				found = true;
-				break;
-			}
-		}
-		if (found) {
-			System.out.println("Passed");
-		} else {
-			System.out.println("Field");
+		Response response = request.post(endpoint);
+		assertEquals(200, response.statusCode());
 
-		}
-
+		Post post = response.as(Post.class);
+		return post;
 	}
+
+
 
 }

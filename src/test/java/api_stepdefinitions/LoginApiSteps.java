@@ -1,40 +1,23 @@
 package api_stepdefinitions;
 
-import java.util.HashMap;
+import java.util.Map;
 
-import org.junit.jupiter.api.Assertions;
-
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.restassured.RestAssured;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
+import utilities.BoraTechApi;
+import utilities.DataManager;
 
 public class LoginApiSteps {
-	Response response;
+	private DataManager dataManager = DataManager.getInstance();
 
-	@Given("call login api with {string} and {string}")
-	public int call_login_api(String email, String password) {
-		RestAssured.baseURI = "https://boratech-practice-app.onrender.com";
-		RequestSpecification request = RestAssured.given();
-		HashMap<String, String> body = new HashMap<String, String>();
-		body.put("email", email);
-		body.put("password", password);
-		request.body(body);
+	@Given("[API] User is logged in")
+	public void api_user_is_logged_in(DataTable dataTable) {
+		Map<String, String> userdata = dataTable.asMap();
+		String email = userdata.get("userName");
+		String password = userdata.get("password");
 
-		request.header("Content-Type", "application/json");
-
-		response = request.post("api/auth");
-		int code = response.getStatusCode();
-		return code;
-
-	}
-
-	@Then("we should get response code {int}")
-	public void we_should_get_response_code(Integer expactedStatusCode) {
-		int actualStatusCode = response.getStatusCode();
-		
-		Assertions.assertTrue(expactedStatusCode==actualStatusCode,"Status code doest not match expected");
+		String token = BoraTechApi.login(email, password);
+		dataManager.setToken(token);
 
 	}
 }
