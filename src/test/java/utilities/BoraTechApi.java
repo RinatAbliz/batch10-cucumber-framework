@@ -1,9 +1,13 @@
 package utilities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
+import java.util.List;
 
+import apiPojos.Education;
+import apiPojos.ExpreiencePojo;
 import apiPojos.Post;
 import apiPojos.PostBody;
 import apiPojos.User;
@@ -51,42 +55,43 @@ public class BoraTechApi {
 
 	}
 
-	public static String addEducation(String token, HashMap<String, Object> body) {
+	public static List<Education> addEducation(String token, Education education) {
 
 		String endPoint = "api/profile/education";
 		RestAssured.baseURI = "https://boratech-practice-app.onrender.com";
 		RequestSpecification request = RestAssured.given();
 
-		request.body(body);
+		request.body(education);
 
 		request.header("x-auth-token", token);
 		request.header("Content-Type", "application/json");
 
 		Response response = request.put(endPoint);
+		assertEquals(200, response.statusCode());
 
 		JsonPath jp = response.jsonPath();
-		String school = jp.get("school");
-
-		return school;
+		List<Education> educations = jp.getList("education", Education.class);
+		return educations;
 
 	}
 
-	public static String addExperience(String token, HashMap<String, Object> body) {
+	public static List<ExpreiencePojo> addExperience(String token, ExpreiencePojo expreience) {
 
 		String endPoint = "api/profile/experience";
 		RestAssured.baseURI = "https://boratech-practice-app.onrender.com";
 		RequestSpecification request = RestAssured.given();
 
-		request.body(body);
+		request.body(expreience);
 
 		request.header("x-auth-token", token);
 		request.header("Content-Type", "application/json");
 
 		Response response = request.put(endPoint);
 		JsonPath jp = response.jsonPath();
-		String company = jp.get("company");
 
-		return company;
+		List<ExpreiencePojo> expreiences = jp.getList("experience", ExpreiencePojo.class);
+		assertTrue(expreiences.size() > 0, "No experience is created");
+		return expreiences;
 
 	}
 
@@ -124,7 +129,5 @@ public class BoraTechApi {
 		Post post = response.as(Post.class);
 		return post;
 	}
-
-
 
 }
