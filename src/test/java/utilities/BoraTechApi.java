@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.HashMap;
 import java.util.List;
 
+import apiPojos.ApiError;
 import apiPojos.Education;
 import apiPojos.ExpreiencePojo;
 import apiPojos.Post;
@@ -75,6 +76,22 @@ public class BoraTechApi {
 
 	}
 
+	public static List<ApiError> addEducationUnhappy(String token, Education education) {
+		String endPoint = "api/profile/education";
+		RestAssured.baseURI = "https://boratech-practice-app.onrender.com";
+		RequestSpecification request = RestAssured.given();
+
+		request.body(education);
+
+		request.header("x-auth-token", token);
+		request.header("Content-Type", "application/json");
+		Response response = request.put(endPoint);
+		assertEquals(400, response.getStatusCode());
+		List<ApiError> errors = response.jsonPath().getList("errors", ApiError.class);
+		assertTrue(errors.size() > 0, "Expected to received at least 1 error none received");
+		return errors;
+	}
+
 	public static List<ExpreiencePojo> addExperience(String token, ExpreiencePojo expreience) {
 
 		String endPoint = "api/profile/experience";
@@ -93,6 +110,21 @@ public class BoraTechApi {
 		assertTrue(expreiences.size() > 0, "No experience is created");
 		return expreiences;
 
+	}
+
+	public static List<ApiError> addExperienceUnhappy(String token, ExpreiencePojo experience) {
+		RestAssured.baseURI = "https://boratech-practice-app.onrender.com";
+		RequestSpecification request = RestAssured.given();
+		request.header("x-auth-token", token);
+		request.header("Content-Type", "application/json");
+
+		request.body(experience);
+		Response response = request.put("/api/profile/experience");
+		int statusCode = response.getStatusCode();
+		assertEquals(400, statusCode, "Expected statues code is 400 But get " + statusCode);
+		List<ApiError> errors = response.jsonPath().getList("errors", ApiError.class);
+		assertTrue(errors.size() > 0, "Expacted get atlast 1 error but not found");
+		return errors;
 	}
 
 	public static User getUserMeta(String token) {

@@ -1,21 +1,56 @@
 package api_stepdefinitions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.poi.hpsf.Array;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Trim;
+
+import apiPojos.ApiError;
 import apiPojos.ExpreiencePojo;
-import io.cucumber.java.en.Then;
+import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.*;
 import utilities.BoraTechApi;
 import utilities.DataManager;
 
 public class AddExperienceSteps {
 	DataManager dataManager = DataManager.getInstance();
 
-	@Then("[API] User should be able to add new experience")
-	public void api_user_should_be_able_to_add_new_experience() {
-		String token = dataManager.getToken();
-		ExpreiencePojo expactedExpreience = new ExpreiencePojo("BoraTech001", "manager", "Annandale", "2022-05-16",
-				"2023-05-16", " ", false);
-		BoraTechApi.addExperience(token, expactedExpreience);
+	@When("user is try to add new experience")
+	public void user_is_try_to_add_new_experience(DataTable dataTable) {
+		Map<String, String> data = dataTable.asMap();
+		ExpreiencePojo expreience = new ExpreiencePojo(data.get("company"), data.get("title"), data.get("location"),
+				data.get("from"), data.get("to"), data.get("description"), Boolean.valueOf(data.get("current")));
 
+		List<ApiError> errors = BoraTechApi.addExperienceUnhappy(dataManager.getToken(), expreience);
+		dataManager.setApiErrors(errors);
+	}
+
+	@Then("user will recevied error massage")
+	public void user_will_recevied_error_massage(DataTable dataTable) {
+		// pre
+		List<String> expactedError = new ArrayList<String>();
+		List<String> acturalError = new ArrayList<String>();
+
+		// create actualError
+		List<ApiError> errors = dataManager.getApiErrors();
+		for (ApiError error : errors) {
+			acturalError.add(error.msg);
+		}
+		System.out.println(acturalError);
+
+		// create expactedError
+		String csErrorString = dataTable.asMap().get("errors");
+		String[] csErrors = csErrorString.split(",");
+		for (String error : csErrors) {
+			expactedError.add(error.trim());
+		}
+		System.out.println(expactedError);
 		
+		assertEquals(expactedError, acturalError,"expacted Error did not show up");
 
 	}
 
