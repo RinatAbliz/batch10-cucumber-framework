@@ -1,14 +1,15 @@
 package utilities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.HashMap;
 import java.util.List;
 
 import apiPojos.ApiError;
 import apiPojos.Education;
 import apiPojos.ExpreiencePojo;
+import apiPojos.LoginRequest;
 import apiPojos.Post;
 import apiPojos.PostBody;
 import apiPojos.User;
@@ -18,27 +19,44 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 public class BoraTechApi {
-	public static String login(String email, String password) {
+	private static Response loginBase(String email, String password) {
 		String endPoint = "api/auth";
 		RestAssured.baseURI = "https://boratech-practice-app.onrender.com";
 		RequestSpecification request = RestAssured.given();
 
-		HashMap<String, String> body = new HashMap<String, String>();
-		body.put("email", email);
-		body.put("password", password);
+		LoginRequest body = new LoginRequest(email, password);
 
 		request.body(body);
 
 		request.header("Content-Type", "application/json");
 
 		Response response = request.post(endPoint);
+		return response;
+	}
+
+	public static String login(String email, String password) {
+		Response response = loginBase(email, password);
 
 		JsonPath jp = response.jsonPath();
+
+		assertEquals(200, response.getStatusCode());
 
 		String token = jp.get("token");
 
 		return token;
 
+	}
+
+	public static String loginUnhappyPath(String email, String password) {
+		Response response = loginBase(email, password);
+
+		assertEquals(400, response.getStatusCode());
+
+		JsonPath jp = response.jsonPath();
+
+		String msg = jp.get("errors[0].msg");
+		assertNotNull(msg);
+		return msg;
 	}
 
 	public static void getAuthorizedUserMeta(String token) {

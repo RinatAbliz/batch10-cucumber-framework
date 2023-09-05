@@ -10,6 +10,7 @@ public class DataManager {
 	private static DataManager dataManager = null;
 	private String token;
 	private List<ApiError> apiErrors;
+	private String errorMessage;
 
 	private DataManager() {
 
@@ -42,6 +43,14 @@ public class DataManager {
 
 	public void setApiErrors(List<ApiError> apiErrors) {
 		this.apiErrors = apiErrors;
+	}
+
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
 	}
 
 }
