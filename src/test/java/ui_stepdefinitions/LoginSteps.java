@@ -36,7 +36,7 @@ public class LoginSteps {
 	public void user_enter_the_username_and_password_and_submit(String userName, String password)
 			throws InterruptedException {
 		signIn.signIn(userName, password);
-		Keywords.wait(2);
+		Keywords.wait(3);
 
 	}
 

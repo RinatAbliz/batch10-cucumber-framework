@@ -1,35 +1,38 @@
 package page_objects;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class Navbar {
-	//local varible
+	// local varible
 	private WebDriver driver;
-	
-	
-	//Elements
-	
-	private By homeLink=By.xpath("//a[@href=\"/\"]");
-	private By registerLink = By.xpath("//nav//a[@href='/register']");
-	private By loginLink = By.xpath("//nav//a[@href='/Login']");
-	
-	//constructor
+
+	// Elements
+	@FindBy(xpath = "//a[@href=\"/\"]")
+	private WebElement homeLink;
+	@FindBy(xpath = "//nav//a[@href='/register']")
+	private WebElement registerLink;
+	@FindBy(xpath = "//nav//a[@href='/Login']")
+	private WebElement loginLink;
+
+	// constructor
 	public Navbar(WebDriver driver) {
-		this.driver=driver;
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
 	}
-	
-	
-	//action
-	public void returnHome(){
-		driver.findElement(homeLink).click();
+
+	// action
+	public void returnHome() {
+		homeLink.click();
 	}
-	
+
 	public void navigateToLoginPage() {
-		driver.findElement(loginLink).click();
+		loginLink.click();
 	}
-	
+
 	public void navigateToRegisterPage() {
-		driver.findElement(registerLink).click();
+		registerLink.click();
 	}
 }
