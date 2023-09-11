@@ -16,6 +16,8 @@ public class Navbar {
 	private WebElement registerLink;
 	@FindBy(xpath = "//nav//a[@href='/Login']")
 	private WebElement loginLink;
+	@FindBy(xpath = "//nav//a[@href='/posts']")
+	private WebElement post;
 
 	// constructor
 	public Navbar(WebDriver driver) {
@@ -34,5 +36,9 @@ public class Navbar {
 
 	public void navigateToRegisterPage() {
 		registerLink.click();
+	}
+
+	public void navigateToPostPage() {
+		post.click();
 	}
 }
