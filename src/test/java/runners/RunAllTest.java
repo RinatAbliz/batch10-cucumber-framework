@@ -14,6 +14,6 @@ import org.junit.platform.suite.api.Suite;
 @SelectClasspathResource("features")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty,html:target/html-reports/index.html")
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "ui_stepdefinitions,api_stepdefinitions")
-@ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "@Login")
+@ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "@AddEducation")
 public class RunAllTest {
 }

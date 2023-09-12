@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import pojo.Experiecne;
+import pojo.Experience;
 import utilities.BoraTech;
 import utilities.Keywords;
 
@@ -15,18 +15,18 @@ public class CreatBoratechProfile {
 		String password = "As5889590";
 
 		WebDriver driver = new ChromeDriver();
-		Experiecne exp_1 = new Experiecne("Casher", "CVS", "Fairfax", "05/12/2013", "02/12/2015",
+		Experience exp_1 = new Experience("Casher", "CVS", "Fairfax", "05/12/2013", "02/12/2015",
 				"Working hard everday", false);
-		Experiecne exp_2 = new Experiecne("Manager", "Target", "Fairfax", "05/12/2015", "02/15/2016",
+		Experience exp_2 = new Experience("Manager", "Target", "Fairfax", "05/12/2015", "02/15/2016",
 				"Working hard everday", false);
-		Experiecne exp_3 = new Experiecne("driver", "food", "Fairfax", "05/12/2013", "", "Working hard everday", true);
+		Experience exp_3 = new Experience("driver", "food", "Fairfax", "05/12/2013", "", "Working hard everday", true);
 
 		try {
 			BoraTech.login(driver, userName, password);
 
-			Experiecne[] experiecnes = { exp_1, exp_2, exp_3 };
-			for (Experiecne experiecne : experiecnes) {
-				BoraTech.AddExperience(driver, experiecne);
+			Experience[] experiecnes = { exp_1, exp_2, exp_3 };
+			for (Experience experience : experiecnes) {
+				BoraTech.AddExperience(driver, experience);
 				Keywords.wait(1);
 			}
 			BoraTech.deleteAllExperiences(driver);
