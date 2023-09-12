@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.locators.RelativeLocator;
 
 import pojo.Education;
-import pojo.Experiecne;
+import pojo.Experience;
 
 public class BoraTech {
 
@@ -45,13 +45,13 @@ public class BoraTech {
 		}
 	}
 
-	public static void AddExperience(WebDriver driver, Experiecne ex) throws Exception {
+	public static void AddExperience(WebDriver driver, Experience ex) throws Exception {
 
 		driver.findElement(By.xpath("//a[@href=\"/add-experience\"]")).click();
 
-		driver.findElement(By.name("title")).sendKeys(ex.jobTitle);
+		driver.findElement(By.name("title")).sendKeys(ex.title);
 
-		driver.findElement(By.name("company")).sendKeys(ex.companeyName);
+		driver.findElement(By.name("company")).sendKeys(ex.companey);
 
 		driver.findElement(By.name("location")).sendKeys(ex.location);
 
@@ -84,7 +84,7 @@ public class BoraTech {
 			List<WebElement> cells = rol.findElements(By.tagName("td"));
 			String actualCompany = cells.get(0).getText();
 			String actualTile = cells.get(1).getText();
-			if (actualCompany.equals(ex.companeyName) && actualTile.equals(ex.jobTitle)) {
+			if (actualCompany.equals(ex.companey) && actualTile.equals(ex.title)) {
 				found = true;
 				break;
 

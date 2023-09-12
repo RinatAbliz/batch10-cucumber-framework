@@ -1,6 +1,7 @@
 package page_objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -22,10 +23,9 @@ public class DashboardPage {
 	private WebElement addEducation;
 	@FindBy(xpath = "//section//h1[text()='Dashboard']")
 	private WebElement titleText;
+	@FindBy(xpath = "//div[@class='alert alert-success']")
+	private WebElement successAlert;
 
-//	private By addExperience = By.xpath("//a[@href='/add-experience']");
-//	private By addEducation = By.xpath("//a[@href='/add-education']");
-//	private By titleText = By.xpath("//section//h1[text()='Dashboard']");
 
 	// constructor
 	public DashboardPage(WebDriver driver) {
@@ -46,6 +46,11 @@ public class DashboardPage {
 		assertEquals(TITLE_TEXT, titleText.getText());
 		assertEquals(URL, driver.getCurrentUrl());
 
+	}
+
+	public void checkSuccessAlert(String alert) {
+		assertTrue(successAlert.isDisplayed());
+		assertEquals(alert, successAlert.getText());
 	}
 
 }

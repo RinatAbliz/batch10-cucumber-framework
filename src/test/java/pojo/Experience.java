@@ -1,8 +1,8 @@
 package pojo;
 
-public class Experiecne {
-	public String jobTitle;
-	public String companeyName;
+public class Experience {
+	public String title;
+	public String companey;
 	public String location;
 	public String from;
 	public String to;
@@ -10,10 +10,10 @@ public class Experiecne {
 	public boolean current;
 
 
-	public Experiecne (String jobTitle, String companeyName, String location, String from, String to,
+	public Experience (String title, String companey, String location, String from, String to,
 			String describtion, boolean current ) {
-		this.jobTitle = jobTitle;
-		this.companeyName = companeyName;
+		this.title = title;
+		this.companey= companey;
 		this.location = location;
 		this.from = from;
 		this.to = to;
