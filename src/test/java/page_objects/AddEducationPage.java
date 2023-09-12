@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
@@ -42,7 +44,6 @@ public class AddEducationPage {
 	private WebElement titleText;
 	@FindBy(xpath = "//div[@class='alert alert-danger']")
 	private List<WebElement> ErrorAlerts;
-	
 
 	// constractor
 	public AddEducationPage(WebDriver driver) {
@@ -76,13 +77,14 @@ public class AddEducationPage {
 
 	}
 
-	public void checkErrorAlert(String alert) {
-		
+	public void checkErrorAlert(List<String> expactedError) {
+		List<String> actualError = new ArrayList<String>();
 		for (WebElement error : ErrorAlerts) {
-			assertTrue(error.getText().contains(alert));
+			actualError.add(error.getText());
 		}
+		Collections.sort(actualError);
+		Collections.sort(expactedError);
+		assertEquals(expactedError, actualError);
 	}
-
-
 
 }
