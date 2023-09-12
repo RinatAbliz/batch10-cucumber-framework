@@ -7,6 +7,7 @@ import java.util.Set;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import pojo.EducationDataDriven;
 import pojo.Experience;
 
 public class Keywords {
@@ -66,6 +67,21 @@ public class Keywords {
 		Experience experience = new Experience(title, company, location, from, to, description, current);
 
 		return experience;
+	}
+
+	public static EducationDataDriven convertMapToEducation(Map<String, String> data) {
+		String school = data.get("school") == null ? "" : data.get("school") + getTimeStamp();
+		String degree = data.get("degree") == null ? "" : data.get("degree");
+		String FieldOfStudy = data.get("FieldOfStudy") == null ? "" : data.get("FieldOfStudy");
+		String from = data.get("from") == null ? "" : data.get("from");
+		String to = data.get("to") == null ? "" : data.get("to");
+		String description = data.get("description") == null ? "" : data.get("description");
+		boolean current = data.get("current") == null ? false : Boolean.valueOf(data.get("current"));
+		EducationDataDriven education = new EducationDataDriven(school, degree, FieldOfStudy, from, to, description,
+				current);
+
+		return education;
+
 	}
 
 }

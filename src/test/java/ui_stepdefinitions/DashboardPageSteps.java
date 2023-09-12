@@ -33,4 +33,9 @@ public class DashboardPageSteps {
 		page.dashboard().navigateTOAddExperiencePage();
 	}
 
+	@When("user is click Add Education")
+	public void user_is_click_add_education() {
+		page.dashboard().navigateTOAddEducationPage();
+	}
+
 }
