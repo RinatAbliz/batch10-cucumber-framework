@@ -180,4 +180,20 @@ public class BoraTechApi {
 		return post;
 	}
 
+	public static List<Post> getPosts(String token) {
+		String endpoint = "/api/posts";
+
+		RestAssured.baseURI = "https://boratech-practice-app.onrender.com";
+		RequestSpecification request = RestAssured.given();
+
+		request.header("x-auth-token", token);
+		request.header("Content-Type", "application/json");
+
+		Response response = request.get(endpoint);
+		assertEquals(200, response.statusCode());
+
+		List<Post> post = response.jsonPath().getList("", Post.class);
+		return post;
+	}
+
 }

@@ -2,37 +2,18 @@ package ui_stepdefinitions;
 
 import java.util.Map;
 
+import apiPojos.Post;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import utilities.DataManager;
 import utilities.Keywords;
 import utilities.PageManager;
 
 public class PostSteps {
-	
-	private PageManager pages= PageManager.getInstance();
 
-	@Given("User is logged in")
-	public void user_is_logged_in(DataTable dataTable) throws InterruptedException {
-		Map<String, String> userinfo = dataTable.asMap();
-		String userName = userinfo.get("userName");
-		String password = userinfo.get("password");
-
-		pages.homePage().navigeteToHomePage();
-		pages.homePage().clickOnLogin();
-		pages.signIn().signIn(userName, password);
-		Keywords.wait(2);
-		pages.dashboard().pageValidation();
-
-	}
-
-	@When("User navigates to the Post page")
-	public void user_navigates_to_the_post_page() {
-		pages.navbar().navigateToPostPage();
-		pages.postPage().checkPageLoad();
-
-	}
+	private PageManager pages = PageManager.getInstance();
+	private DataManager data = DataManager.getInstance();
 
 	@When("User enter the post content")
 	public void user_enter_the_post_content(DataTable dataTable) {
@@ -52,4 +33,18 @@ public class PostSteps {
 		pages.postPage().createdAlertValidition();
 
 	}
+
+	@Then("user should see the post that was created previously")
+	public void user_should_see_the_post_that_was_created_previously() {
+		Post previouslyCreatedPost = data.getPost();
+		pages.postPage().checkPreviouslyCreatedPost(previouslyCreatedPost);
+	}
+
+	@When("user deleted the post that was created previously")
+	public void user_deleted_the_post_that_was_created_previously() {
+		Post previouslyCreatedPost = data.getPost();
+		pages.postPage().findAndDeletePost(previouslyCreatedPost).click();
+		
+	}
+
 }
