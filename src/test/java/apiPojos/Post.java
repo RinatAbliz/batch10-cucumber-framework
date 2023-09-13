@@ -24,7 +24,9 @@ public class Post {
 		this.date = date;
 		this.__v = __v;
 	}
-	
-	
+
+	public boolean equals(Post post) {
+		return this.name.equals(post.name) && this.text.equals(post.text);
+	}
 
 }
