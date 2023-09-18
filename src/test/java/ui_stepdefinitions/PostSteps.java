@@ -46,5 +46,8 @@ public class PostSteps {
 		pages.postPage().findAndDeletePost(previouslyCreatedPost).click();
 		
 	}
+	
+	
+
 
 }

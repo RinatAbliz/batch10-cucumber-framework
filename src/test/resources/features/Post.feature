@@ -19,16 +19,16 @@ Feature: Post
   #Then [API] user should be able to created new post
   #| content                                |
   #| Cucumber is a lot more than your think |
-  @UI @API @End-to-End
+  @UI @API @E2E
   Scenario: Post End-to-End Test
     Given [API] User is logged in
-      | userName | mochen703@gmail.com |
+      | email | mochen703@gmail.com |
       | password | As5889590           |
     Then [API] user should be able to created new post
       | content                                |
       | Cucumber is a lot more than your think |
     Given User is logged in
-      | userName | mochen703@gmail.com |
+      | email | mochen703@gmail.com |
       | password | As5889590           |
     When User navigates to the Post page
     Then user should see the post that was created previously

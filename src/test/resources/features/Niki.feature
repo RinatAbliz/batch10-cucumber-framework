@@ -1,6 +1,6 @@
 Feature: Niki
 
-  @UI @Nike_Search
+  @Nike_Search
   Scenario: Happy path
     Given User is on the Nike homepage
     When User is searching for - "Air Jordan"

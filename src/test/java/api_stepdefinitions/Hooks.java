@@ -6,12 +6,12 @@ import utilities.DataManager;
 
 public class Hooks {
 
-	@Before("@API or @api")
+	@Before("@API or @api or @E2E or @e2e")
 	public void setUp() {
-	 DataManager.getInstance();
+		DataManager.getInstance();
 	}
 
-	@After("@API or @api")
+	@After("@API or @api or @E2E or @e2e")
 	public void cleanUp() {
 		DataManager.cleanUp();
 	}
