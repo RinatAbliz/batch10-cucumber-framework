@@ -19,7 +19,7 @@ public class LoginApiSteps {
 	public void api_user_is_logged_in(DataTable dataTable) {
 	
 		Map<String, String> userdata = dataTable.asMap();
-		String email = userdata.get("userName");
+		String email = userdata.get("email");
 		String password = userdata.get("password");
 
 		String token = BoraTechApi.login(email, password);

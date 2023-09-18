@@ -44,6 +44,7 @@ public class AddEducationPage {
 	private WebElement titleText;
 	@FindBy(xpath = "//div[@class='alert alert-danger']")
 	private List<WebElement> ErrorAlerts;
+	
 
 	// constractor
 	public AddEducationPage(WebDriver driver) {

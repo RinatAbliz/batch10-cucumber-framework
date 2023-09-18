@@ -26,7 +26,7 @@ public class Post {
 	}
 
 	public boolean equals(Post post) {
-		return this.name.equals(post.name) && this.text.equals(post.text);
+		return this.name.equals(post.name) && this.text.equals(post.text)&&this.user.equals(post.user);
 	}
 
 }

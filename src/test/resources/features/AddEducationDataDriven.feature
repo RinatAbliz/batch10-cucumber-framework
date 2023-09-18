@@ -23,7 +23,7 @@ Feature: Add Education
   #Examples:
   #| school       | degree       | FieldOfStudy | from       | to         | description          | current | alert           |
   #| George Mason | QA Certifild | Automation   | 02/12/2018 | 07/12/2022 | working hard everday | false   | Education Added |
-  @UI
+  @UI @paraller
   Scenario Outline: unHappy Path
     Given user is on the BoraTech Dashboard page
       | email    | mochen703@gmail.com |

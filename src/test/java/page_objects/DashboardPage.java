@@ -3,15 +3,20 @@ package page_objects;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.Duration;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class DashboardPage {
 
 	// local varible
 	private WebDriver driver;
+	private WebDriverWait wait;
 	private final String TITLE_TEXT = "Dashboard";
 	private final String URL = "https://boratech-practice-app.onrender.com/dashboard";
 
@@ -26,10 +31,10 @@ public class DashboardPage {
 	@FindBy(xpath = "//div[@class='alert alert-success']")
 	private WebElement successAlert;
 
-
 	// constructor
 	public DashboardPage(WebDriver driver) {
 		this.driver = driver;
+		wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		PageFactory.initElements(driver, this);
 	}
 
@@ -43,6 +48,9 @@ public class DashboardPage {
 	}
 
 	public void pageValidation() {
+		wait.until(ExpectedConditions.urlToBe(URL));
+		wait.until(ExpectedConditions.textToBePresentInElement(titleText, TITLE_TEXT));
+
 		assertEquals(TITLE_TEXT, titleText.getText());
 		assertEquals(URL, driver.getCurrentUrl());
 

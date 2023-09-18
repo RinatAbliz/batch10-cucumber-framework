@@ -40,7 +40,7 @@ Feature: Add Experience
       | description | This is a new experience |
     Then user should see a success alert that says [Experience Added]
 
-  @UI
+  @UI @paraller
   Scenario Outline: Unhappy path
     Given user is on the BoraTech Dashboard page
       | email    | mochen703@gmail.com |

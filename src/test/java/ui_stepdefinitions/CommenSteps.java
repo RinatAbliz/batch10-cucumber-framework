@@ -14,7 +14,7 @@ public class CommenSteps {
 	@Given("User is logged in")
 	public void user_is_logged_in(DataTable dataTable) throws InterruptedException {
 		Map<String, String> userinfo = dataTable.asMap();
-		String userName = userinfo.get("userName");
+		String userName = userinfo.get("email");
 		String password = userinfo.get("password");
 
 		pages.homePage().navigeteToHomePage();

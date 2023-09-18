@@ -11,7 +11,7 @@ import page_objects.PostPage;
 import page_objects.SignInPage;
 
 public class PageManager {
-	private static PageManager pageManager;
+	private static ThreadLocal<PageManager> threadLocalPageManager;
 	private WebDriver driver;
 	private HomePage homePage;
 	private SignInPage signIn;
@@ -26,14 +26,18 @@ public class PageManager {
 	}
 
 	public static PageManager getInstance() {
-		if (pageManager == null) {
-			pageManager = new PageManager(DriverManager.getInstance());
+		if (threadLocalPageManager == null) {
+			threadLocalPageManager = new ThreadLocal<PageManager>();
 		}
-		return pageManager;
+		if (threadLocalPageManager.get() == null) {
+			PageManager pageManager = new PageManager(DriverManager.getInstance());
+			threadLocalPageManager.set(pageManager);
+		}
+		return threadLocalPageManager.get();
 	}
 
 	public static void cleanUp() {
-		pageManager = null;
+		threadLocalPageManager.set(null);
 	}
 
 	public HomePage homePage() {
